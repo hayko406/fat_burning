@@ -1,16 +1,17 @@
 import streamlit as st
 
 st.header('Калькулятор процента жира')
-current_weight = st.number_input('твой текущий вес', step=5)
-current_fat = st.number_input('твой текущий процент жира', step=1)
-desired_fat = 100 - st.number_input('какой процент жира ты хочешь', step=1)
+current_weight = st.number_input('твой текущий вес', step=5., value=None)
+current_fat = st.number_input('твой текущий процент жира', step=1., value=None)
+desired_fat = st.number_input('какой процент жира ты хочешь', step=1., value=None)
 
 but = st.button('посчитать сколько мне нужно весить для этого')
 
-if current_fat>=100 or current_fat<0 or desired_fat<0:
-    st.header("неправильный процент жира")
-else:
-    if but:
+if but:
+    if current_weight is None or current_fat is None or desired_fat is None or current_fat>=100 or current_fat<0 or desired_fat<0:
+        st.header("неправильный процент жира")
+    else:
+        desired_fat = 100 - desired_fat
         muscles = 100 - current_fat
         fat_muscles_diff = 100/muscles
         desired_fat_muscles_diff = 100/desired_fat
